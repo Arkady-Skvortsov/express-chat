@@ -1,6 +1,6 @@
 FROM node:latest 
 
-WORKDIR /express-chat
+WORKDIR /chat-express
 
 COPY package*.json /
 

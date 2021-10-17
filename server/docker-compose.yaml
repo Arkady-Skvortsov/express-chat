@@ -8,7 +8,10 @@ services:
     depends_on:
       - mongo
     ports:
-      - 5000:5000
+      - 3500:3500
+    volumes:
+      - ./models
+      - ./views
     networks:
       - express-network
 
@@ -25,4 +28,4 @@ services:
 
 networks:
   express-network:
-    - driver: bridge
+    driver: bridge
