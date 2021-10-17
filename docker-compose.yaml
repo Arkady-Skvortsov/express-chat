@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  app:
+    image: 389798/express-chat-image
+    container_name: express-chat-container
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - 5000:5000
+    networks:
+      - express-network
+
+  mongo:
+    image: mongo
+    container_name: mongo-chat-container
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: Arkadiy
+      MONGO_INITDB_ROOT_PASSWORD: Stark2003
+    networks:
+      - express-network
+
+networks:
+  express-network:
+    - driver: bridge

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Express chat</title>
+  </head>
+  <body>
+    <div class="main-container">
+      <input
+        type="text"
+        class="main-container__name-input"
+        placeholder="Enter please you'r name"
+      />
+
+      <input
+        type="text"
+        class="main-container__message-input"
+        placeholder="Write you'r new message right here"
+      />
+
+      <div class="main-container__messages-block"></div>
+
+      <button class="main-container__send-message">Send this message!</button>
+    </div>
+  </body>
+  <script>
+    const socket = io("ws://localhost:3500");
+    const div = document.querySelector(".main-container__messages-block");
+    const button = document.querySelector(".main-container__send-message");
+    const name_input = document.querySelector(".main-container__name-input");
+    const message_input = document.querySelector(
+      ".main-container__message-input"
+    );
+
+    socket.on("message", (username, text) => {
+      const block = document.createElement("div");
+
+      block.innerHTML = `${username}: ${text}`;
+
+      div.appendChild(block);
+    });
+
+    button.addEventListener("click", () => {
+      socket.emit("message", name_input.value, message_input.value);
+
+      name_input.value = "";
+      message_input.value = "";
+    });
+  </script>
+</html>
